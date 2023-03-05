@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.Database
 
 fun main() {
     Database.connect(
-        url = "jdbc:postgresql://localhost:5432/logcade_db",
+        url = "jdbc:postgresql://localhost:5432/logcate_db",
         driver = "org.postgresql.Driver",
         user = "postgres",
         password = "123987"
@@ -19,11 +19,11 @@ fun main() {
         port = 8080,
         host = "0.0.0.0",
         module = Application::module
-    )
-        .start(wait = true)
+    ).start(wait = true)
 }
 
 fun Application.module() {
     configureSerialization()
     configureRouting()
+    configureRoutingLog()
 }

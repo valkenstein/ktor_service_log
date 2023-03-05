@@ -5,18 +5,18 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-object LogCateModel : Table() {
-    private val id = LogCateModel.varchar("id", 20)
-    private val response = LogCateModel.varchar("response", 400)
-    private val request = LogCateModel.varchar("request", 200)
-    private val url = LogCateModel.varchar("url", 50)
-    private val body = LogCateModel.varchar("body", 200)
-    private val code = LogCateModel.varchar("code", 10)
+object logcat_table : Table() {
+    private val id = logcat_table.varchar("id", 20)
+    private val response = logcat_table.varchar("response", 400)
+    private val request = logcat_table.varchar("request", 200)
+    private val url = logcat_table.varchar("url", 50)
+    private val body = logcat_table.varchar("body", 200)
+    private val code = logcat_table.varchar("code", 10)
 
     fun insert(userDTO: LogCateDto) {
         transaction {
-            LogCateModel.insert {
-                it.set(id, userDTO.id?: "")
+            logcat_table.insert {
+                it[id] = userDTO.id?: ""
                 it[response] = userDTO.response?: ""
                 it[request] = userDTO.request?: ""
                 it[url] = userDTO.url ?: ""
@@ -29,14 +29,14 @@ object LogCateModel : Table() {
     fun fetchUser(login: String): LogCateDto? {
         return try {
             transaction {
-                val userModel = LogCateModel.select { LogCateModel.id.eq(login) }.single()
+                val userModel = logcat_table.select { logcat_table.id.eq(login) }.single()
                 LogCateDto(
-                    id = userModel[LogCateModel.id],
                     response = userModel[response],
                     request = userModel[request],
                     url = userModel[url],
                     body = userModel[body],
                     code = userModel[code],
+                    id = userModel[this@logcat_table.id],
                 )
             }
         } catch (e: Exception) {
