@@ -8,6 +8,11 @@ plugins {
     id("io.ktor.plugin") version "2.2.4"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
 }
+ktor {
+    fatJar {
+        archiveFileName.set("fat.jar")
+    }
+}
 
 group = "com.example"
 version = "0.0.1"

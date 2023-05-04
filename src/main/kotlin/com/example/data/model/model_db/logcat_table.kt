@@ -5,6 +5,8 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+
+
 object logcat_table : Table() {
     private val id = logcat_table.varchar("id", 20)
     private val response = logcat_table.varchar("response", 400)
